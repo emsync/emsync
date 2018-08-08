@@ -1,19 +1,21 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
-import { db } from './firebase';
+import React, { Component } from "react";
+import logo from "./logo.svg";
+import "./App.css";
+import { db } from "./firebase";
 // import firebase from 'firebase'
+import { Navbar } from "./components";
+import Routes from "./routes";
 
 class App extends Component {
   constructor() {
     super();
     this.state = {
-      name: '',
+      name: ""
     };
   }
 
   componentDidMount() {
-    db.doc('courses/online')
+    db.doc("courses/online")
       .get()
       .then(doc => this.setState({ name: doc.data().name }));
   }
@@ -24,9 +26,10 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">{this.state.name}</h1>
         </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        <div>
+          <Navbar />
+          <Routes />
+        </div>
       </div>
     );
   }
