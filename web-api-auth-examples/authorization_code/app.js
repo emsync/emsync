@@ -7,6 +7,7 @@
  * https://developer.spotify.com/web-api/authorization-guide/#authorization_code_flow
  */
 
+var { db } = require('../../src/firebase');
 var express = require('express'); // Express web server framework
 var request = require('request'); // "Request" library
 var cors = require('cors');
@@ -99,6 +100,7 @@ app.get('/callback', function(req, res) {
 
         console.log('Access Token: ', access_token);
         console.log('Refresh Token: ', refresh_token);
+        // console.log('Body: ', body);
 
         var options = {
           url: 'https://api.spotify.com/v1/me',
@@ -107,8 +109,19 @@ app.get('/callback', function(req, res) {
         };
 
         // use the access token to access the Spotify Web API
-        request.get(options, function(error, response, body) {
+        request.get(options, async function(error, response, body) {
+          var data = {
+            name: body.id,
+            email: body.email,
+            access_token: access_token,
+            refresh_token: refresh_token,
+          };
           console.log(body);
+
+          await db
+            .collection('users')
+            .doc(data.name)
+            .set(data);
         });
 
         // we can also pass the token to the browser to make requests from there
