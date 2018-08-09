@@ -15,12 +15,19 @@ const Extra = props => {
   );
 };
 
-export const roomSingleCard = props => (
-  <Card
-    image={props.imageUrl}
-    header={props.name}
-    meta="Room"
-    description={props.description}
-    extra={<Extra listeners={props.listeners.length} name={props.name} />}
-  />
-);
+const RoomSingleCard = props => {
+  console.log("singleCard props", props);
+  return (
+    <Card
+      image={props.room.imageUrl}
+      header={props.room.name}
+      meta="Room"
+      description={props.room.description}
+      extra={
+        <Extra listeners={props.room.listeners.length} name={props.room.name} />
+      }
+    />
+  );
+};
+
+export default RoomSingleCard;
