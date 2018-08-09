@@ -8,15 +8,15 @@
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "rewrites": [
       {
-        "source": "/home",
-        "function": "api"
-      },
-      {
         "source": "/users",
         "function": "api"
       },
       {
-        "source": "/songs",
+        "source": "/user",
+        "function": "api"
+      },
+      {
+        "source": "/album/:adlbumId",
         "function": "api"
       }
     ]
