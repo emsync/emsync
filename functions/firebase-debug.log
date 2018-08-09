@@ -1,0 +1,46 @@
+[debug] [2018-08-09T14:59:18.651Z] ----------------------------------------------------------------------
+[debug] [2018-08-09T14:59:18.653Z] Command:       /usr/local/bin/node /usr/local/bin/firebase serve
+[debug] [2018-08-09T14:59:18.653Z] CLI Version:   4.0.3
+[debug] [2018-08-09T14:59:18.653Z] Platform:      darwin
+[debug] [2018-08-09T14:59:18.653Z] Node Version:  v8.11.3
+[debug] [2018-08-09T14:59:18.654Z] Time:          Thu Aug 09 2018 10:59:18 GMT-0400 (EDT)
+[debug] [2018-08-09T14:59:18.654Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2018-08-09T14:59:18.665Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-08-09T14:59:18.665Z] > authorizing via signed-in user
+[debug] [2018-08-09T14:59:18.667Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/emsync-ae69c  
+  
+ Thu Aug 09 2018 10:59:18 GMT-0400 (EDT)
+[debug] [2018-08-09T14:59:18.934Z] <<< HTTP RESPONSE 200
+[debug] [2018-08-09T14:59:18.935Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/emsync-ae69c/tokens  
+  
+ Thu Aug 09 2018 10:59:18 GMT-0400 (EDT)
+[debug] [2018-08-09T14:59:19.219Z] <<< HTTP RESPONSE 200
+[debug] [2018-08-09T14:59:19.219Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/emsync-ae69c  
+  
+ Thu Aug 09 2018 10:59:19 GMT-0400 (EDT)
+[debug] [2018-08-09T14:59:19.446Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from '/Users/rterry/Desktop/emsync'...
+[info] 
+[info] i  functions: Preparing to emulate functions.
+[debug] [2018-08-09T14:59:20.002Z] Fetching environment
+[debug] [2018-08-09T14:59:20.004Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/554264331102:getServerAppConfig  
+  
+ Thu Aug 09 2018 10:59:20 GMT-0400 (EDT)
+[debug] [2018-08-09T14:59:20.004Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/554264331102/clients/_:getWebAppConfig  
+  
+ Thu Aug 09 2018 10:59:20 GMT-0400 (EDT)
+[debug] [2018-08-09T14:59:20.262Z] <<< HTTP RESPONSE 200
+[info] i  hosting: Serving hosting files from: build
+[info] ✔  hosting: Local server: http://localhost:5000
+
+[debug] [2018-08-09T14:59:20.322Z] <<< HTTP RESPONSE 200
+[debug] [2018-08-09T14:59:20.322Z] Starting @google-cloud/functions-emulator
+[debug] [2018-08-09T14:59:21.886Z] Parsing function triggers
+[info] ✔  functions: helloWorld: http://localhost:5001/emsync-ae69c/us-central1/helloWorld
+[info] [hosting] Rewriting /home to local function helloWorld
+[info] [hosting] Rewriting /home to local function helloWorld
+[info] [hosting] Rewriting /home to local function helloWorld
+[info] [hosting] Rewriting /home to local function helloWorld
+[info] [hosting] Rewriting /home to local function helloWorld
