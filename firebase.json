@@ -9,7 +9,15 @@
     "rewrites": [
       {
         "source": "/home",
-        "function": "helloWorld"
+        "function": "api"
+      },
+      {
+        "source": "/users",
+        "function": "api"
+      },
+      {
+        "source": "/songs",
+        "function": "api"
       }
     ]
   },
