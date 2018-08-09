@@ -12,11 +12,11 @@
         "function": "api"
       },
       {
-        "source": "/song",
+        "source": "/user",
         "function": "api"
       },
       {
-        "source": "/album/",
+        "source": "/album/:adlbumId",
         "function": "api"
       }
     ]
