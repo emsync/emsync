@@ -3,11 +3,19 @@ const express = require('express');
 
 /* Express */
 const app1 = express();
-app1.get('*', (request, response) => {
+app1.get('/home', (request, response) => {
   console.log('Hit this route');
-  response.send('Hello from Express on Firebase!');
+  response.send('Home!!!!');
 });
 
-const api1 = functions.https.onRequest(app1);
+app1.get('/users', (request, response) => {
+  console.log('Hit this route');
+  response.send('Users!!!!');
+});
 
-exports.helloWorld = api1;
+app1.get('/songs', (request, response) => {
+  console.log('Hit this route');
+  response.send('Songs!!!!!!');
+});
+
+exports.api = functions.https.onRequest(app1);
