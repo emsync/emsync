@@ -1,0 +1,45 @@
+[debug] [2018-08-09T20:35:32.653Z] ----------------------------------------------------------------------
+[debug] [2018-08-09T20:35:32.656Z] Command:       /usr/local/bin/node /usr/local/bin/firebase serve
+[debug] [2018-08-09T20:35:32.657Z] CLI Version:   4.0.3
+[debug] [2018-08-09T20:35:32.657Z] Platform:      darwin
+[debug] [2018-08-09T20:35:32.657Z] Node Version:  v9.11.1
+[debug] [2018-08-09T20:35:32.658Z] Time:          Thu Aug 09 2018 16:35:32 GMT-0400 (EDT)
+[debug] [2018-08-09T20:35:32.659Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2018-08-09T20:35:32.674Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-08-09T20:35:32.674Z] > authorizing via signed-in user
+[debug] [2018-08-09T20:35:32.676Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/emsync-ae69c  
+  
+ Thu Aug 09 2018 16:35:32 GMT-0400 (EDT)
+[debug] [2018-08-09T20:35:33.022Z] <<< HTTP RESPONSE 200
+[debug] [2018-08-09T20:35:33.024Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/emsync-ae69c/tokens  
+  
+ Thu Aug 09 2018 16:35:33 GMT-0400 (EDT)
+[debug] [2018-08-09T20:35:33.418Z] <<< HTTP RESPONSE 200
+[debug] [2018-08-09T20:35:33.420Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/emsync-ae69c  
+  
+ Thu Aug 09 2018 16:35:33 GMT-0400 (EDT)
+[debug] [2018-08-09T20:35:33.675Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from '/Users/moniquerz/Documents/FULLSTACK/SENIOR/emsync'...
+[info] 
+[info] i  functions: Preparing to emulate functions.
+[debug] [2018-08-09T20:35:34.652Z] Fetching environment
+[debug] [2018-08-09T20:35:34.655Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/554264331102:getServerAppConfig  
+  
+ Thu Aug 09 2018 16:35:34 GMT-0400 (EDT)
+[debug] [2018-08-09T20:35:34.656Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/554264331102/clients/_:getWebAppConfig  
+  
+ Thu Aug 09 2018 16:35:34 GMT-0400 (EDT)
+[debug] [2018-08-09T20:35:35.934Z] <<< HTTP RESPONSE 200
+[info] i  hosting: Serving hosting files from: build
+[info] ✔  hosting: Local server: http://localhost:5000
+
+[debug] [2018-08-09T20:35:37.844Z] <<< HTTP RESPONSE 200
+[debug] [2018-08-09T20:35:37.844Z] Starting @google-cloud/functions-emulator
+[debug] [2018-08-09T20:35:39.925Z] Parsing function triggers
+[info] ✔  functions: api: http://localhost:5001/emsync-ae69c/us-central1/api
+[info] [hosting] Rewriting /album/ to local function api
+[info] [hosting] Rewriting /album/ to local function api
+[info] [hosting] Rewriting /album/ to local function api
+[info] [hosting] Rewriting /album/ to local function api
