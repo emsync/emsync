@@ -1,21 +1,23 @@
-import React, { Component } from "react";
-import logo from "./logo.svg";
-import "./App.css";
-import { db } from "./firebase";
+import React, { Component } from 'react';
+import logo from './logo.svg';
+import './App.css';
+import { db } from './firebase';
 // import firebase from 'firebase'
-import { Navbar } from "./components";
-import Routes from "./routes";
+import { Navbar } from './components';
+import Routes from './routes';
+
+//let x
 
 class App extends Component {
   constructor() {
     super();
     this.state = {
-      name: ""
+      name: '',
     };
   }
 
   componentDidMount() {
-    db.doc("courses/online")
+    db.doc('courses/online')
       .get()
       .then(doc => this.setState({ name: doc.data().name }));
   }

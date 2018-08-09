@@ -1,4 +1,4 @@
-import firebase from 'firebase';
+var firebase = require('firebase');
 require('firebase/firestore');
 
 var config = {
@@ -12,4 +12,5 @@ var config = {
 
 firebase.initializeApp(config);
 
-export const db = firebase.firestore();
+const db = firebase.firestore();
+module.exports = { db };
