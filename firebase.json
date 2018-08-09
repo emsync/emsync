@@ -18,6 +18,10 @@
       {
         "source": "/songs",
         "function": "api"
+      },
+      {
+        "source": "**",
+        "function": "/index.html"
       }
     ]
   },
