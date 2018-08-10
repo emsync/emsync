@@ -5,10 +5,11 @@ import ListenersList from "./ListenersList";
 import { db } from "../firebase";
 
 const RoomView = props => {
-  console.log("roomview props", props);
-  console.log("listeners", props.room.listeners);
   return props.room ? (
-    <ListenersList listeners={props.room.listeners} />
+    <div>
+      <h1>{props.room.name}</h1>
+      <ListenersList listeners={props.room.listeners} />
+    </div>
   ) : (
     <p>Loading...</p>
   );
