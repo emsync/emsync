@@ -18,6 +18,10 @@
       {
         "source": "/album/:adlbumId",
         "function": "api"
+      },
+      {
+        "source": "**",
+        "function": "/index.html"
       }
     ]
   },

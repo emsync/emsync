@@ -1,59 +1,68 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import { Link } from "react-router-dom";
-import { logout } from "../store";
+import React, { Component } from 'react';
+import { Menu } from 'semantic-ui-react';
+import { firebase } from '../firebase';
+import { Link } from 'react-router-dom';
 
-const Navbar = ({ handleClick, isLoggedIn }) => (
-  <div>
-    <h1>EMSYNC</h1>
-    <nav>
-      {isLoggedIn ? (
-        <div>
-          {/* The navbar will show these links after you log in */}
-          <Link to="/home">Home</Link>
-          <a href="#" onClick={handleClick}>
-            Logout
-          </a>
-        </div>
-      ) : (
-        <div>
-          {/* The navbar will show these links before you log in */}
-          <Link to="/login">Login</Link>
-          <Link to="/signup">Sign Up</Link>
-        </div>
-      )}
-    </nav>
-    <hr />
-  </div>
-);
-
-/**
- * CONTAINER
- */
-const mapState = state => {
-  return {
-    isLoggedIn: !!state.user.id
+export default class NavBar extends Component {
+  constructor() {
+    super();
+    this.state = {
+      loggedIn: false,
+      userName: 'wormat23',
+    };
+  }
+  handleClick = () => {
+    // firebase
+    //   .auth()
+    //   .signInWithCustomToken('36KJ5G634G6345634586345968')
+    //   .then(function() {
+    //     console.log('signed in!');
+    //   })
+    //   .catch(function(error) {});
+    this.setState({ loggedIn: !this.state.loggedIn });
   };
-};
 
-const mapDispatch = dispatch => {
-  return {
-    handleClick() {
-      dispatch(logout());
-    }
-  };
-};
+  render() {
+    return (
+      //if logged in show username
+      <div>
+        <Menu stackable inverted>
+          <Menu.Item as={Link} to="/">
+            <img
+              src="https://avatars2.githubusercontent.com/u/42189420?s=200&v=4"
+              alt="emSync Logo"
+            />
+          </Menu.Item>
 
-export default connect(
-  mapState,
-  mapDispatch
-)(Navbar);
+          {!this.state.loggedIn ? (
+            <Menu.Item name="login" onClick={this.handleClick} key={1}>
+              Login
+            </Menu.Item>
+          ) : null}
 
-/**
- * PROP TYPES
- */
-Navbar.propTypes = {
-  handleClick: PropTypes.func.isRequired,
-  isLoggedIn: PropTypes.bool.isRequired
-};
+          <Menu.Item key={2}>Test</Menu.Item>
+
+          {/* If user is logged in */}
+          {this.state.loggedIn
+            ? [
+                <Menu.Item
+                  className="navRight"
+                  position="right"
+                  name="welcomeUser"
+                >
+                  Welcome {this.state.userName}
+                </Menu.Item>,
+                <Menu.Item
+                  className="navRight"
+                  name="logout"
+                  onClick={this.handleClick}
+                >
+                  Logout
+                </Menu.Item>,
+              ]
+            : null}
+        </Menu>
+      </div>
+    );
+  }
+}
