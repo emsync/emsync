@@ -16,7 +16,11 @@
         "function": "api"
       },
       {
-        "source": "/album/:adlbumId",
+        "source": "/album",
+        "function": "api"
+      },
+      {
+        "source": "/song",
         "function": "api"
       }
     ]
