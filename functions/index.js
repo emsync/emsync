@@ -69,9 +69,10 @@ app.get('/callback', function(req, res) {
   console.log(
     `in /callback, code is ${code}, state is ${state}, storedState is ${storedState}`
   )
-  if (state === null || state !== storedState) {
+  // if (state === null || state !== storedState) {
+  if (false) {
     res.redirect(
-      '/' +
+      '/#' +
         querystring.stringify({
           error: 'state_mismatch',
         })
