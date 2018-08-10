@@ -20,6 +20,18 @@
         "function": "api"
       },
       {
+        "source": "/login",
+        "function": "api"
+      },
+      {
+        "source": "/callback",
+        "function": "api"
+      },
+      {
+        "source": "/refresh_token",
+        "function": "api"
+      },
+      {
         "source": "**",
         "function": "/index.html"
       }
