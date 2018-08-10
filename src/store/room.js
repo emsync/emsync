@@ -39,6 +39,7 @@ db.collection("rooms").onSnapshot(
           }
         })();
       } else if (change.type === "modified") {
+        //may not want to dispatch to the store every single time something is modified: may want to decide as  a group when we want this to happen
         (async dispatch => {
           try {
             store.dispatch(updateRoom(change.doc.data()));
