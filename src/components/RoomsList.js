@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import RoomSingleCard from "./roomSingleCard";
 
 export const RoomsList = props => {
-  console.log("rooms list props", props);
   return (
     <Grid columns="three" divided>
       <Grid.Row>

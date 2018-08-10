@@ -6,9 +6,8 @@ const { db } = require("../src/firebase");
 const usersCollection = db.collection("users");
 const roomCollection = db.collection("rooms");
 const slugify = require("slugify");
-const path = require('path');
+const path = require("path");
 
-/* Express */
 const app1 = express();
 
 // app1.use('*', (req, res) => {
@@ -16,15 +15,13 @@ const app1 = express();
 // });
 
 // app1.get('*', (req, res, next) => {
-//   console.log('hitting catch all route');
 //   // res.send('hitting catch all route');
 //   next();
 // });
 
-app1.get('/home', (request, response) => {
-  console.log('Hit this route');
-  response.send('Home2!!!!');
-});
+// app1.get("/home", (request, response) => {
+//   response.send("Home2!!!!");
+// });
 
 const app = express();
 

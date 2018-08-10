@@ -1,19 +1,28 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { SingleRoomListeners } from "./SingleRoomListeners";
+import ListenersList from "./ListenersList";
+import { db } from "../firebase";
 
-export const RoomView = props => {
-  return <SingleRoomListeners />;
+const RoomView = props => {
+  console.log("roomview props", props);
+  console.log("listeners", props.room.listeners);
+  return props.room ? (
+    <ListenersList listeners={props.room.listeners} />
+  ) : (
+    <p>Loading...</p>
+  );
 };
 
 const mapState = (state, ownProps) => {
+  console.log("state is", state);
   const currentRoom = state.rooms.find(room => {
-    return room.name === ownProps.match.params.name;
+    console.log("match params are", ownProps.match.params);
+    return room.slug === ownProps.match.params.slug;
   });
+
   return {
-    email: state.user.email,
-    rooms: state.rooms
+    room: currentRoom
   };
 };
 

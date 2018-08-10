@@ -7,7 +7,6 @@ import { RoomsList } from "./RoomsList";
  * COMPONENT
  */
 export const UserHome = props => {
-  console.log(props);
   return (
     props.rooms.length && (
       <div>
@@ -22,7 +21,6 @@ export const UserHome = props => {
  * CONTAINER
  */
 const mapState = state => {
-  console.log("state is", state);
   return {
     email: state.user.email,
     rooms: state.rooms

@@ -7,7 +7,6 @@ const UPDATE_ROOM = "UPDATE_ROOM";
 
 const removeRoom = room => ({ type: REMOVE_ROOM, room });
 const addRoom = room => {
-  console.log("CALLED ADD ROOM");
   return { type: ADD_ROOM, room };
 };
 const updateRoom = room => ({ type: UPDATE_ROOM, room });
@@ -17,14 +16,10 @@ db.collection("rooms").onSnapshot(
     let changes = snapshot.docChanges();
     //returns an array of docs that were changed in this collection with a type property
     changes.forEach(change => {
-      console.log(change.doc.data());
-      console.log(change.type);
       // --> if you want to see the actual data in the doc
       if (change.type === "added") {
-        console.log("here!");
         (async dispatch => {
           try {
-            console.log("in the try");
             store.dispatch(addRoom(change.doc.data()));
           } catch (err) {
             console.error(err);
@@ -58,7 +53,6 @@ db.collection("rooms").onSnapshot(
 export default function(state = [], action) {
   switch (action.type) {
     case ADD_ROOM:
-      console.log("called add!!!");
       return [...state, action.room];
     case REMOVE_ROOM:
       let roomsCopy = state.slice();

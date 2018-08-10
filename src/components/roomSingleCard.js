@@ -4,11 +4,12 @@ import { connect } from "react-redux";
 import { Card, Icon, Button } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 const Extra = props => {
+  console.log("slug is", props.slug);
   return (
     <div>
       <Icon name="user" />
       {props.listeners} Listeners
-      <Link to={`/rooms/${props.name}`}>
+      <Link to={`/rooms/${props.slug}`}>
         <Button content="Join" icon="right arrow" labelPosition="right" />
       </Link>
     </div>
@@ -16,7 +17,6 @@ const Extra = props => {
 };
 
 const RoomSingleCard = props => {
-  console.log("singleCard props", props);
   return (
     <Card
       image={props.room.imageUrl}
@@ -24,7 +24,7 @@ const RoomSingleCard = props => {
       meta="Room"
       description={props.room.description}
       extra={
-        <Extra listeners={props.room.listeners.length} name={props.room.name} />
+        <Extra listeners={props.room.listeners.length} slug={props.room.slug} />
       }
     />
   );

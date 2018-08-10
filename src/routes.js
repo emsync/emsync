@@ -4,6 +4,7 @@ import { withRouter, Route, Switch } from "react-router-dom";
 import PropTypes from "prop-types";
 import { Login, Signup, UserHome } from "./components";
 import { me } from "./store";
+import RoomView from "./components/RoomView";
 
 /**
  * COMPONENT
@@ -15,17 +16,17 @@ class Routes extends Component {
 
   render() {
     const { isLoggedIn } = this.props;
-
+    console.log("isLoggedin", isLoggedIn);
     return (
       <Switch>
         {/* Routes placed here are available to all visitors */}
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
+        <Route path="/rooms/:slug" component={RoomView} />
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
             {/* Xanthe: for the individual room component, I made the link in my roomSingleCard to go to /rooms/:id where the id is the name of the room, so when someone makes the room component route then either use that or change the roomSingleCard */}
-
             <Route path="/home" component={UserHome} />
           </Switch>
         )}
