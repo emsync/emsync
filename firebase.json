@@ -22,6 +22,10 @@
       {
         "source": "/song",
         "function": "api"
+      },
+      {
+        "source": "**",
+        "function": "/index.html"
       }
     ]
   },
