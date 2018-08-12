@@ -3,8 +3,8 @@ const functions = require('firebase-functions')
 const express = require('express')
 const asyncHandler = require('express-async-handler')
 const request = require('request')
-const { db } = require('../src/firebase')
-const usersCollection = db.collection('users')
+// const { db } = require('../src/firebase')
+const usersCollection = functions.database.ref('/users');
 const roomCollection = db.collection('rooms')
 const querystring = require('querystring')
 var cookieParser = require('cookie-parser')
@@ -209,23 +209,46 @@ app.get(
   })
 )
 
+
+
+// GET user by name
+// app.get('/user', (req, res, next) => {
+//   console.log('getting user')
+//   // get user by name
+//    usersCollection.doc(req.query.name).get().then(user => {
+//      if (user === undefined) {
+//        res.send('No data found')
+//      } else {
+//        res.send(user.data())
+//      }
+//    })
+// });
+
+
+
 //GET Album by ID
 
-// "https://api.spotify.com/v1/albums/0sNOF9WDwhWunNAHPD3Baj?market=US" - H "Authorization: Bearer BQD42fP09rP2t4LeRD9WYT9AgEZdCsyv7zHCptRTtXluC3uJQQ8acpy1tvJo3WxHKmHqcF6k4_eyC-t9ItD1z8d-AxPuviNeFwj2AQmesj2PbKDxn1XmDLf9fTagMyP7_1JLb_d-7HPs8aVb"
+// app.get('/album/', (req,res,next) => {
+//   console.log('getting album by title');
+//   //get user by name
+//   const user = await usersCollection.doc('user1').get();
+//   const userRefreshToken = user.data().refresh_token;
+//   const albumId = req.query.albumId;
 
-app.get(
-  '/album/',
-  asyncHandler(async (req, res, next) => {
-    console.log('getting album by title')
-    //get user by name
-    const user = await usersCollection.doc('user1').get()
-    const userRefreshToken = user.data().refresh_token
-    const albumId = req.params.albumId
+//   const options = { url: `https://api.spotify.com/v1/albums/${albumId}?market=US`, 
+//   headers: { Authorization: `Bearer ${userRefreshToken}` } };
 
-    const options = {
-      url: `https://api.spotify.com/v1/albums/${albumId}?market=US`,
-      headers: { Authorization: `Bearer ${userRefreshToken}` },
-    }
+//   const album = await request(options, (error,response,body) => {
+//     if(!error && response.statusCode == 200){
+//       console.log('album', body)
+//       res.send(JSON.parse(body))
+//     }else{
+//       res.send('NO album found')
+//     }
+//   } )
+// }));
+
+
 
     const album = await request(options, (error, response, body) => {
       if (!error && response.statusCode == 200) {
@@ -239,31 +262,77 @@ app.get(
 )
 
 //GET song by Id
+=======
+/* "https://api.spotify.com/v1/search?q=Muse&type=track%2Cartist&market=US&limit=10&offset=5" 
+-H "Accept: application/json" 
+-H "Content-Type: application/json" 
+-H "Authorization: Bearer TOKEN GOES HERE*/
+
 
 app.get(
-  '/song/',
-  asyncHandler(async (req, res, next) => {
-    console.log('getting song by title')
-    // i need roomID from request
-    //get room by name
-    const room = await roomsCollection.doc('user1').get()
-    const userRefreshToken = user.data().refresh_token
-    const albumId = req.params.albumId
+  '/song', (req, res, next) => {
+    console.log('getting item from Spotify');
 
-    const options = {
-      url: `https://api.spotify.com/v1/albums/${albumId}?market=US`,
-      headers: { Authorization: `Bearer ${userRefreshToken}` },
-    }
+    // testing data. DELETE 
+    //  const testingData = {
+    //    q:'Muse',
+    //    type:'track%2Cartist',
+    //    market:'US',
+    //    limit:'10',
+    //    offset:'5',
+    //  }
+    //  const testingToken = 'BQAOHmYLSecP25atvxov82QXzM2vE3pIhUtzo7C5soNq2I631sjlC9idQyMHo0QyGqFOVlOeP7cH7aQnFJNXqCfaKcU4BqVYQ1VVTdjmanuIvEnu3I-iX6gVo2q6dmWg1f8wbWbPM-wMGyMB';
 
-    const album = await request(options, (error, response, body) => {
-      if (!error && response.statusCode == 200) {
-        console.log('album', body)
-        res.send(JSON.parse(body))
-      } else {
-        res.send('NO album found')
-      }
+    //  const options = {
+    //    url: `https://api.spotify.com/v1/search?q=${testingData.q}&type=${testingData.type}&market=${testingData.market}&limit=${testingData.limit}&offset=${testingData.offset}`,
+    //    headers: { 'Authorization': `Bearer ${testingToken}` }
+    //   };
+
+    return usersCollection.doc('funkyRoom').get().then(user => {
+
+      const userRefreshToken = user.data().refresh_token;
+
+
+      const options = {
+        url: `https://api.spotify.com/v1/search?q=${req.query.q}&type=${req.query.type}&market=${req.query.market}&limit=${req.query.limit}&offset=${req.query.offset}`,
+        headers: { Authorization: `Bearer ${userRefreshToken}` }
+      };
+
+      return options
+
+    }).then((options) => {
+
+      return request(options, (error, response, body) => {
+        console.log('options', options)
+
+        if (!error && response.statusCode === 200) {
+          console.log('song', body);
+          res.send(JSON.parse(body));
+        } else {
+          console.log(body)
+          res.send('No song found');
+        }
+      });
     })
-  })
-)
+  });
 
-exports.api = functions.https.onRequest(app)
+
+
+exports.createRoom = functions.firestore
+  .document("rooms/{roomId}")
+  .onCreate((snap, context) => {
+    const name = snap.data().name;
+    const slug = slugify(name, {
+      remove: null,
+      lower: true
+    });
+    db.collection("rooms")
+      .doc(snap.id)
+      .update({
+        slug
+      });
+  })
+
+
+exports.api = functions.https.onRequest(app);
+  
