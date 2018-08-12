@@ -15,60 +15,6 @@ app.get('/home', (request, response) => {
 });
 
 
-//GET all users
-
-// app.get('/users',  (req, res, next) => {
-//   console.log('getting users')
-//   const users = [];
-//   return usersCollection.get().then((data) => {
-//     data.forEach(doc => users.push(doc.data()));
-//     if (data === undefined) {
-//       res.send('No data found')
-//     } else {
-//       res.send(users)
-//     }
-//   })
-// });
-
-
-// GET user by name
-// app.get('/user', (req, res, next) => {
-//   console.log('getting user')
-//   // get user by name
-//    usersCollection.doc(req.query.name).get().then(user => {
-//      if (user === undefined) {
-//        res.send('No data found')
-//      } else {
-//        res.send(user.data())
-//      }
-//    })
-// });
-
-
-//GET Album by ID
-
-// app.get('/album/', (req,res,next) => {
-//   console.log('getting album by title');
-//   //get user by name
-//   const user = await usersCollection.doc('user1').get();
-//   const userRefreshToken = user.data().refresh_token;
-//   const albumId = req.query.albumId;
-
-//   const options = { url: `https://api.spotify.com/v1/albums/${albumId}?market=US`, 
-//   headers: { Authorization: `Bearer ${userRefreshToken}` } };
-
-//   const album = await request(options, (error,response,body) => {
-//     if(!error && response.statusCode == 200){
-//       console.log('album', body)
-//       res.send(JSON.parse(body))
-//     }else{
-//       res.send('NO album found')
-//     }
-//   } )
-// }));
-
-
-
 //GET track/artist/album through search
 
 /* "https://api.spotify.com/v1/search?q=Muse&type=track%2Cartist&market=US&limit=10&offset=5" 
@@ -125,7 +71,6 @@ app.get(
   });
 
 
-
 exports.createRoom = functions.firestore
   .document("rooms/{roomId}")
   .onCreate((snap, context) => {
@@ -143,4 +88,3 @@ exports.createRoom = functions.firestore
 
 
 exports.api = functions.https.onRequest(app);
-  
