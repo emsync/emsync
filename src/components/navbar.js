@@ -1,15 +1,15 @@
-import React, { Component } from 'react';
-import { Menu } from 'semantic-ui-react';
-import { firebase } from '../firebase';
-import { Link } from 'react-router-dom';
+import React, { Component } from 'react'
+import { Menu } from 'semantic-ui-react'
+import { firebase } from '../firebase'
+import { Link } from 'react-router-dom'
 
 export default class NavBar extends Component {
   constructor() {
-    super();
+    super()
     this.state = {
       loggedIn: false,
       userName: 'wormat23',
-    };
+    }
   }
   handleClick = () => {
     // firebase
@@ -19,8 +19,8 @@ export default class NavBar extends Component {
     //     console.log('signed in!');
     //   })
     //   .catch(function(error) {});
-    this.setState({ loggedIn: !this.state.loggedIn });
-  };
+    this.setState({ loggedIn: !this.state.loggedIn })
+  }
 
   render() {
     return (
@@ -35,7 +35,7 @@ export default class NavBar extends Component {
           </Menu.Item>
 
           {!this.state.loggedIn ? (
-            <Menu.Item name="login" onClick={this.handleClick} key={1}>
+            <Menu.Item name="login" as={Link} to="/login" key={1}>
               Login
             </Menu.Item>
           ) : null}
@@ -63,6 +63,6 @@ export default class NavBar extends Component {
             : null}
         </Menu>
       </div>
-    );
+    )
   }
 }

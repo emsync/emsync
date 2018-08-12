@@ -23,15 +23,16 @@ class Routes extends Component {
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         <Route path="/rooms/:slug" component={RoomView} />
+
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
             {/* Xanthe: for the individual room component, I made the link in my roomSingleCard to go to /rooms/:id where the id is the name of the room, so when someone makes the room component route then either use that or change the roomSingleCard */}
+
             <Route path="/home" component={UserHome} />
           </Switch>
         )}
         {/* Displays our Login component as a fallback */}
-        <Route component={UserHome} />
       </Switch>
     );
   }
