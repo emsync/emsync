@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter, Route, Switch } from "react-router-dom";
 import PropTypes from "prop-types";
-import { Login, Signup, UserHome } from "./components";
+import { UserHome } from "./components";
 import { me } from "./store";
 import RoomView from "./components/RoomView";
 
@@ -20,9 +20,9 @@ class Routes extends Component {
     return (
       <Switch>
         {/* Routes placed here are available to all visitors */}
-        <Route path="/login" component={Login} />
-        <Route path="/signup" component={Signup} />
-        <Route path="/rooms/:slug" component={RoomView} />
+        {/* <Route path="/login" component={Login} />
+        <Route path="/signup" component={Signup} /> */}
+        <Route path="/rooms/:name" component={RoomView} />
 
         {isLoggedIn && (
           <Switch>
@@ -33,6 +33,7 @@ class Routes extends Component {
           </Switch>
         )}
         {/* Displays our Login component as a fallback */}
+        <Route component={UserHome} />
       </Switch>
     );
   }

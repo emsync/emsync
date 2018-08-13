@@ -1,73 +1,146 @@
 import { db } from "../firebase";
 import store from "./index";
+import firebase from "firebase";
 
-const ADD_ROOM = "ADD_ROOM";
-const REMOVE_ROOM = "REMOVE_ROOM";
-const UPDATE_ROOM = "UPDATE_ROOM";
+const GET_ROOM = "GET_ROOM";
+const ADD_QUEUE = "ADD_QUEUE";
+const REMOVE_QUEUE = "REMOVE_QUEUE";
+const ADD_LISTENER = "ADD_LISTENER";
+const REMOVE_LISTENER = "REMOVE_LISTENER";
 
-const removeRoom = room => ({ type: REMOVE_ROOM, room });
-const addRoom = room => {
-  return { type: ADD_ROOM, room };
+const getRoom = room => ({ type: GET_ROOM, room });
+const addQueue = song => {
+  return { type: ADD_QUEUE, song };
 };
-const updateRoom = room => ({ type: UPDATE_ROOM, room });
+const removeQueue = song => ({ type: REMOVE_QUEUE, song });
+const addListener = listener => ({ type: ADD_LISTENER, listener });
+const removeListener = listener => ({ type: REMOVE_LISTENER, listener });
 
-db.collection("rooms").onSnapshot(
-  snapshot => {
-    let changes = snapshot.docChanges();
-    //returns an array of docs that were changed in this collection with a type property
-    changes.forEach(change => {
-      // --> if you want to see the actual data in the doc
-      if (change.type === "added") {
-        (async dispatch => {
-          try {
-            store.dispatch(addRoom(change.doc.data()));
-          } catch (err) {
-            console.error(err);
-          }
-        })();
-      } else if (change.type === "removed") {
-        (async dispatch => {
-          try {
-            store.dispatch(removeRoom(change.doc.data()));
-          } catch (err) {
-            console.error(err);
-          }
-        })();
-      } else if (change.type === "modified") {
-        //may not want to dispatch to the store every single time something is modified: may want to decide as  a group when we want this to happen
-        console.log("UPDATE CALLED");
+// const currentState = store.getState();
+// const currentRoom = currentState.room;
 
-        (async dispatch => {
-          try {
-            store.dispatch(updateRoom(change.doc.data()));
-          } catch (err) {
-            console.error(err);
-          }
-        })();
+//THUNK CREATORS
+export const fetchRoom = id => async dispatch => {
+  console.log("id in fetch room is", id);
+  db.collection("/rooms")
+    .doc(id)
+    .get()
+    .then(doc => {
+      if (doc.exists) {
+        dispatch(getRoom(doc.data()));
+      } else {
+        console.log("Room id doesnt exist!");
       }
+    })
+    .catch(err => {
+      console.log("error in room reducer", err);
     });
-  },
-  err => {
-    console.log(err);
-  }
-);
+};
 
-export default function(state = [], action) {
+export const removeFromQueue = (song, roomId) => async dispatch => {
+  db.collection("/rooms")
+    .doc(roomId)
+    .update({
+      queue: firebase.firestore.FieldValue.arrayRemove(song)
+    })
+    .then(() => {
+      dispatch(removeQueue(song));
+      console.log("Song successfully removed from queue");
+    })
+    .catch(err => {
+      console.log("error in room reducer", err);
+    });
+};
+
+export const addToQueue = (song, roomId) => async dispatch => {
+  console.log(roomId);
+  db.collection("/rooms")
+    .doc(roomId)
+    .update({
+      queue: firebase.firestore.FieldValue.arrayUnion(song)
+    })
+    .then(() => {
+      dispatch(addQueue(song));
+      console.log("Song successfully added to queue");
+    })
+    .catch(err => {
+      console.log("error in room reducer", err);
+    });
+};
+
+export const newListener = (userId, roomId) => async dispatch => {
+  db.collection("users")
+    .doc(userId)
+    .get()
+    .then(doc => {
+      if (doc.exists) {
+        db.collection("/rooms")
+          .doc(roomId)
+          .update({
+            listeners: firebase.firestore.FieldValue.arrayUnion(doc.data())
+          })
+          .then(() => {
+            dispatch(addListener(doc.data()));
+            console.log("Listener just added to room!");
+          })
+          .catch(err => {
+            console.log("error in room reducer", err);
+          });
+      }
+    })
+    .catch(err => {
+      console.log("err!", err);
+    });
+};
+
+export const departingListener = (userId, roomId) => async dispatch => {
+  db.collection("users")
+    .doc(userId)
+    .get()
+    .then(doc => {
+      if (doc.exists) {
+        db.collection("/rooms")
+          .doc(roomId)
+          .update({
+            listeners: firebase.firestore.FieldValue.arrayRemove(doc.data())
+          })
+          .then(() => {
+            dispatch(removeListener(doc.data()));
+            console.log("Listener justleft the room!");
+          })
+          .catch(err => {
+            console.log("error in room reducer", err);
+          });
+      }
+    })
+    .catch(err => {
+      console.log("err!", err);
+    });
+};
+export default function(state = {}, action) {
   switch (action.type) {
-    case ADD_ROOM:
-      return [...state, action.room];
-    case REMOVE_ROOM:
-      let roomsCopy = state.slice();
-      let roomsRemoved = roomsCopy.filter(room => {
-        return room.name !== action.room.name;
+    case GET_ROOM:
+      return action.room;
+    case ADD_QUEUE:
+      const queue = state.queue.slice();
+      queue.push(action.song);
+      return { ...state, queue };
+    case REMOVE_QUEUE:
+      let queueToRemove = state.queue.slice();
+      let updatedQueue = queueToRemove.filter(song => {
+        return song !== action.song;
       });
-      return roomsRemoved;
-    case UPDATE_ROOM:
-      let rooms = state.slice();
-      let roomsRemovedToUpdate = rooms.filter(room => {
-        return room.name !== action.room.name;
+      return { ...state, queue: updatedQueue };
+    case ADD_LISTENER:
+      const listeners = state.listeners.slice();
+      listeners.push(action.listener);
+      return { ...state, listeners };
+    case REMOVE_LISTENER:
+      let listenersToRemove = state.listeners.slice();
+      let updatedListeners = listenersToRemove.filter(listener => {
+        return listener.id !== action.listener.id;
       });
-      return [...roomsRemovedToUpdate, action.room];
+      return { ...state, listeners: updatedListeners };
     default:
       return state;
   }

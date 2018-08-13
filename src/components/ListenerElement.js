@@ -7,18 +7,21 @@ export class ListenerElement extends Component {
   constructor() {
     super();
     this.state = {
-      listener: {}
+      listener: {
+        name: "Xanthe",
+        imageUrl: "https://png.icons8.com/ios/1600/person-female-filled.png"
+      }
     };
   }
 
-  async componentDidMount() {
-    const res = await this.props.listener.get();
-    const listener = res.data();
-    console.log("LISTENER IS", listener);
-    this.setState({
-      listener
-    });
-  }
+  // async componentDidMount() {
+  //   const res = await this.props.listener.get();
+  //   const listener = res.data();
+  //   console.log("LISTENER IS", listener);
+  //   this.setState({
+  //     listener
+  //   });
+  // }
 
   render() {
     return (
